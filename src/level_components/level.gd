@@ -30,6 +30,7 @@ onready var _rifle = $PickableRifle
 onready var _hand_gun_controller = $PickableHandGun/VRWeaponController
 onready var _rifle_controller = $PickableRifle/VRWeaponController
 onready var _radial_menu = $Feature_RadialMenu
+onready var _level_radial_menu = $Feature_RadialMenu2
 #onready var _camera_system: LevelCameraSystem = $LevelCameraSystem
 onready var _level_name := filename.get_file().get_basename()
 onready var _level_ui: LevelUI = get_node("LevelUI")
@@ -73,8 +74,8 @@ func _process(delta: float) -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):
-		_pause_menu.popup()
-
+		#_pause_menu.popup()
+		get_tree().quit()
 
 ############################
 # Signal Connected Methods #
@@ -110,6 +111,25 @@ func _on_friendly_target_hit() -> void:
 
 func _on_quit_level() -> void:
 	emit_signal("change_scene_request", "res://src/ui/main_menu/main_menu.tscn")
+
+func _on_radial_level_entry_selected(entry):
+	if entry == "quit":
+		get_tree().quit()
+	if entry == "level1":
+		emit_signal("change_scene_request", "res://src/levels/level_1.tscn")
+		get_tree().change_scene("res://src/levels/level_1.tscn")
+	if entry == "level2":
+		emit_signal("change_scene_request", "res://src/levels/level_2.tscn")
+		get_tree().change_scene("res://src/levels/level_2.tscn")
+	if entry == "level3":
+		emit_signal("change_scene_request", "res://src/levels/level_3.tscn")
+		get_tree().change_scene("res://src/levels/level_3.tscn")
+	if entry == "level4":
+		emit_signal("change_scene_request", "res://src/levels/level_4.tscn")
+		get_tree().change_scene("res://src/levels/level_4.tscn")
+	if entry == "level5":
+		emit_signal("change_scene_request", "res://src/levels/level_5.tscn")
+		get_tree().change_scene("res://src/levels/level_5.tscn")
 
 func _on_radial_entry_selected(entry):
 	var radial_controller = _radial_menu.controller
@@ -218,12 +238,17 @@ func _connect_signals() -> void:
 			_level_ui, "_on_badge_earned"
 	)
 
-	# VR Radial Menu
+	# VR Radial Gun Menu
 	GenUtils.connect_signal_assert_ok(
 			_radial_menu, "entry_selected", 
 			self, "_on_radial_entry_selected"
 	)
-
+	
+	# VR Level Selection Menu
+	GenUtils.connect_signal_assert_ok(
+			_level_radial_menu, "entry_selected", 
+			self, "_on_radial_level_entry_selected"
+	)
 func _start_run() -> void:
 	MusicManager.transition_to_track(
 			MusicManager.Tracks.ON_RANGE, 1
@@ -282,10 +307,10 @@ func _finish_run() -> void:
 	 
 	_update_level_best()
 	
-	yield(get_tree().create_timer(0.5), "timeout")
-	_update_and_show_run_summary(
-			missed_enemy_penalty_time_total, hit_friendly_penalty_time_total
-	)
+	#yield(get_tree().create_timer(0.5), "timeout")
+	#_update_and_show_run_summary(
+	#		missed_enemy_penalty_time_total, hit_friendly_penalty_time_total
+	#)
 
 
 func _update_level_best() -> void:
