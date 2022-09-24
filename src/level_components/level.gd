@@ -19,11 +19,18 @@ var _bonus_value: int = 1000
 var _missed_enemy_penalty: float = 1.2
 var _hit_friendly_penalty: float = 0.6
 
+#for VR height selection
+var _is_taller = false
 
 ### Onready variables ###
 onready var _primary_light: DirectionalLight = $WorldEnvironment/DirectionalLight
-onready var _player: Player = $Player
-onready var _camera_system: LevelCameraSystem = $LevelCameraSystem
+onready var _player = $Player
+onready var _hand_gun = $PickableHandGun
+onready var _rifle = $PickableRifle
+onready var _hand_gun_controller = $PickableHandGun/VRWeaponController
+onready var _rifle_controller = $PickableRifle/VRWeaponController
+onready var _radial_menu = $Feature_RadialMenu
+#onready var _camera_system: LevelCameraSystem = $LevelCameraSystem
 onready var _level_name := filename.get_file().get_basename()
 onready var _level_ui: LevelUI = get_node("LevelUI")
 onready var _pause_menu: MultiPageUIMagager = $PauseMenu/PauseMenu
@@ -44,7 +51,7 @@ func _ready() -> void:
 	MusicManager.transition_to_track(
 			MusicManager.Tracks.OFF_RANGE, 3
 	)
-	_player.camera_system = _camera_system
+	
 	
 	_par_time = SaveLoad.load_level_par_time(_level_name)
 	_level_ui.set_label_time_par(_par_time)
@@ -56,7 +63,9 @@ func _ready() -> void:
 	_connect_signals()
 	_init_level_ui()
 
-
+	#_rifle.visible = false
+	#_hand_gun.visible = false
+	
 func _process(delta: float) -> void:
 	if _is_player_on_range:
 		_set_run_time_raw(_run_time_raw + delta)
@@ -102,7 +111,50 @@ func _on_friendly_target_hit() -> void:
 func _on_quit_level() -> void:
 	emit_signal("change_scene_request", "res://src/ui/main_menu/main_menu.tscn")
 
-
+func _on_radial_entry_selected(entry):
+	var radial_controller = _radial_menu.controller
+	var vr_func_pickup = radial_controller.get_node_or_null("Function_Pickup")
+	
+	if vr_func_pickup == null:
+		return
+		
+	if entry == "pistol":
+		if vr_func_pickup.picked_up_object == _hand_gun:
+			return
+			
+		if vr_func_pickup.picked_up_object == null:
+			vr_func_pickup._pick_up_object(_hand_gun)
+			return
+		
+		else:
+			vr_func_pickup._drop_object()
+			vr_func_pickup._pick_up_object(_hand_gun)
+			_hand_gun.visible = true
+			_rifle.visible = false
+			return			
+	
+	if entry == "rifle":
+		if vr_func_pickup.picked_up_object == _rifle:
+			return
+			
+		if vr_func_pickup.picked_up_object == null:
+			vr_func_pickup._pick_up_object(_rifle)
+			return
+			
+		else:
+			vr_func_pickup._drop_object()
+			vr_func_pickup._pick_up_object(_rifle)
+			_rifle.visible = true
+			_hand_gun.visible = false
+			return
+			
+	if entry == "height":
+		if _is_taller == true:
+			_player.get_node("FPController/PlayerBody").player_height_offset -= .25
+			_is_taller = false
+		else:
+			_player.get_node("FPController/PlayerBody").player_height_offset += .25
+			_is_taller = true
 ############################
 #      Private Methods     #
 ############################
@@ -121,7 +173,12 @@ func _init_level_ui() -> void:
 func _connect_signals() -> void:
 	# Player
 	GenUtils.connect_signal_assert_ok(
-			_player, "shooting", 
+			_hand_gun_controller, "shooting", 
+			self, "_on_player_shooting"
+	)
+	
+	GenUtils.connect_signal_assert_ok(
+			_rifle_controller, "shooting", 
 			self, "_on_player_shooting"
 	)
 	
@@ -161,6 +218,11 @@ func _connect_signals() -> void:
 			_level_ui, "_on_badge_earned"
 	)
 
+	# VR Radial Menu
+	GenUtils.connect_signal_assert_ok(
+			_radial_menu, "entry_selected", 
+			self, "_on_radial_entry_selected"
+	)
 
 func _start_run() -> void:
 	MusicManager.transition_to_track(

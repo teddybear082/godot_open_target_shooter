@@ -39,7 +39,7 @@ func spawn_bullet(weapon: Weapon, source: Node) -> void:
 	
 	GenUtils.connect_signal_assert_ok(new_bullet, "collided", self, "_on_bullet_collided")
 	
-	if (source is Player):
+	if (source.is_in_group("Player")):
 		run_bullet_count += 1
 
 

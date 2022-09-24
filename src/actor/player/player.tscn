@@ -351,7 +351,7 @@ nodes/BlendSpace2D/position = Vector2( -380, 240 )
 nodes/TimeScale/node = SubResource( 160 )
 nodes/TimeScale/position = Vector2( -160, 180 )
 nodes/output/position = Vector2( 320, 120 )
-node_connections = [ "TimeScale", 0, "BlendSpace2D", "Blend2", 0, "Animation", "Blend2", 1, "TimeScale", "output", 0, "Blend2" ]
+node_connections = [ "output", 0, "Blend2", "TimeScale", 0, "BlendSpace2D", "Blend2", 0, "Animation", "Blend2", 1, "TimeScale" ]
 
 [sub_resource type="AnimationNodeAnimation" id=25]
 animation = "idle_reload_pose_loop"
@@ -367,7 +367,7 @@ nodes/Animation/node = SubResource( 99 )
 nodes/Animation/position = Vector2( -200, 120 )
 nodes/TimeScale/node = SubResource( 100 )
 nodes/TimeScale/position = Vector2( 100, 100 )
-node_connections = [ "TimeScale", 0, "Animation", "output", 0, "TimeScale" ]
+node_connections = [ "output", 0, "TimeScale", "TimeScale", 0, "Animation" ]
 
 [sub_resource type="AnimationNodeAnimation" id=81]
 animation = "walk_reload_pose_loop"
@@ -381,7 +381,7 @@ nodes/Animation/position = Vector2( -100, 120 )
 nodes/TimeScale/node = SubResource( 82 )
 nodes/TimeScale/position = Vector2( 180, 100 )
 nodes/output/position = Vector2( 460, 140 )
-node_connections = [ "TimeScale", 0, "Animation", "output", 0, "TimeScale" ]
+node_connections = [ "output", 0, "TimeScale", "TimeScale", 0, "Animation" ]
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=84]
 xfade_time = 0.3
@@ -430,7 +430,7 @@ states/walk/node = SubResource( 83 )
 states/walk/position = Vector2( 625, -119 )
 transitions = [ "idle", "walk", SubResource( 84 ), "walk", "idle", SubResource( 85 ), "walk", "aim", SubResource( 94 ), "aim", "walk", SubResource( 95 ), "aim", "idle", SubResource( 96 ), "idle", "aim", SubResource( 97 ), "idle", "run", SubResource( 102 ), "run", "idle", SubResource( 103 ), "run", "walk", SubResource( 104 ), "walk", "run", SubResource( 105 ), "run", "aim", SubResource( 106 ), "aim", "run", SubResource( 107 ) ]
 start_node = "idle"
-graph_offset = Vector2( -33, -186.581 )
+graph_offset = Vector2( -33, -304.696 )
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=139]
 
@@ -657,7 +657,7 @@ use_magnet = true
 magnet = Vector3( 1, 0, -1 )
 
 [node name="BoneAttachmentChest" type="BoneAttachment" parent="Body/dummy_rig/Skeleton"]
-transform = Transform( 1, 3.69618e-09, -2.41807e-07, 1.73384e-08, 0.996215, 0.0869316, 2.41213e-07, -0.0869316, 0.996215, -2.14816e-09, 1.07209, 0.025108 )
+transform = Transform( 0.819152, -1.86934e-08, -0.573577, -0.110291, 0.981339, -0.157512, 0.562873, 0.192286, 0.803866, -2.14819e-09, 1.0305, 0.025108 )
 bone_name = "chest"
 
 [node name="WeaponsAnchor" type="Position3D" parent="Body/dummy_rig/Skeleton/BoneAttachmentChest"]
@@ -681,7 +681,7 @@ anims/RESET = SubResource( 108 )
 anims/lower_weapons = SubResource( 109 )
 
 [node name="BoneAttachmentHip" type="BoneAttachment" parent="Body/dummy_rig/Skeleton"]
-transform = Transform( 1, -4.63232e-08, 2.85438e-07, 5.0578e-08, 0.999889, -0.0149236, -2.84715e-07, 0.0149236, 0.999889, 7.46553e-09, 0.864574, 0.0220108 )
+transform = Transform( 1, -4.63232e-08, 2.85438e-07, 5.0578e-08, 0.999889, -0.0149236, -2.84715e-07, 0.0149236, 0.999889, 7.4655e-09, 0.822984, 0.0220108 )
 bone_name = "hips"
 
 [node name="AmmoBag" type="MeshInstance" parent="Body/dummy_rig/Skeleton/BoneAttachmentHip"]
