@@ -224,9 +224,10 @@ tracks/2/keys = {
 
 [node name="PickableHandGun" type="RigidBody"]
 script = ExtResource( 11 )
+hold_method = 1
 
 [node name="PickupCenter" type="Spatial" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0327443, 0.0834782 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.03, 0 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0121875, 0 )
@@ -292,7 +293,7 @@ anims/reload_load = SubResource( 16 )
 anims/reload_unload = SubResource( 13 )
 
 [node name="AudioStreamReload" type="AudioStreamPlayer3D" parent="VRWeaponController/WeaponPistol"]
-stream = ExtResource( 7 )
+stream = ExtResource( 9 )
 bus = "SoundEffects"
 
 [node name="AudioStreamEmptyClick" type="AudioStreamPlayer3D" parent="VRWeaponController/WeaponPistol"]

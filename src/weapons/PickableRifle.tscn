@@ -263,9 +263,10 @@ tracks/2/keys = {
 
 [node name="PickableRifle" type="RigidBody"]
 script = ExtResource( 12 )
+hold_method = 1
 
 [node name="PickupCenter" type="Spatial" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.059368, 0.0557833 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.03, 0 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.0788834 )

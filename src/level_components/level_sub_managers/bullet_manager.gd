@@ -51,7 +51,7 @@ func update_run_accuracy(enemy_targets_down: int) -> void:
 # Signal Connected Methods #
 ############################
 func _on_bullet_collided(bullet: Bullet, collider: Spatial) -> void:
-	if (bullet.source is Player) and (collider is Target):
+	if (bullet.source.is_in_group("Player")) and (collider is Target):
 		var target: Target = collider as Target
 		if target.is_enemy and not target.is_hit:
 			var bullet_distance: float = bullet.distance_vector.length()

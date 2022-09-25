@@ -10,7 +10,7 @@ signal shooting(spawn_point, bullet_speed, bullet_scene, bullet_damage)
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	weapon_pickable.connect("action_pressed", self, "fire_flat_weapon")# Replace with function body.
-
+	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):

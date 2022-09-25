@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://addons/godot-xr-tools/functions/Function_Jump_movement.tscn" type="PackedScene" id=1]
 [ext_resource path="res://addons/godot-xr-tools/assets/RightPhysicsHand.tscn" type="PackedScene" id=2]
@@ -11,6 +11,44 @@
 [ext_resource path="res://addons/godot-xr-tools/functions/Function_Crouch_movement.tscn" type="PackedScene" id=9]
 [ext_resource path="res://addons/godot-xr-tools/functions/Function_Direct_movement.tscn" type="PackedScene" id=10]
 [ext_resource path="res://addons/godot-xr-tools/misc/VR_Common_Shader_Cache.tscn" type="PackedScene" id=11]
+[ext_resource path="res://addons/godot-xr-tools/objects/Viewport_2D_in_3D_body.gd" type="Script" id=12]
+[ext_resource path="res://addons/godot-xr-tools/objects/Viewport_2D_in_3D.gd" type="Script" id=13]
+[ext_resource path="res://src/ui/player_hud/VR_player_hud.tscn" type="PackedScene" id=14]
+[ext_resource path="res://src/ui/level_ui/VRlevel_ui.tscn" type="PackedScene" id=15]
+
+[sub_resource type="QuadMesh" id=1]
+resource_local_to_scene = true
+size = Vector2( 0.15, 0.1 )
+
+[sub_resource type="ViewportTexture" id=9]
+
+[sub_resource type="SpatialMaterial" id=3]
+resource_local_to_scene = true
+flags_transparent = true
+flags_unshaded = true
+params_cull_mode = 2
+albedo_texture = SubResource( 9 )
+
+[sub_resource type="BoxShape" id=4]
+resource_local_to_scene = true
+extents = Vector3( 0.075, 0.05, 0.01 )
+
+[sub_resource type="QuadMesh" id=5]
+resource_local_to_scene = true
+size = Vector2( 0.2, 0.2 )
+
+[sub_resource type="ViewportTexture" id=10]
+
+[sub_resource type="SpatialMaterial" id=7]
+resource_local_to_scene = true
+flags_transparent = true
+flags_unshaded = true
+params_cull_mode = 2
+albedo_texture = SubResource( 10 )
+
+[sub_resource type="BoxShape" id=8]
+resource_local_to_scene = true
+extents = Vector3( 0.1, 0.1, 0.01 )
 
 [node name="Player" type="Spatial" groups=["Player"]]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.76528 )
@@ -32,6 +70,35 @@ strafe = true
 
 [node name="Function_Pickup" parent="FPController/LeftHandController" index="2" instance=ExtResource( 8 )]
 
+[node name="LeftHandHUD" type="Spatial" parent="FPController/LeftHandController" index="3"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.11, 0, 0 )
+script = ExtResource( 13 )
+screen_size = Vector2( 0.15, 0.1 )
+scene = ExtResource( 14 )
+collision_layer = 0
+
+[node name="Viewport" type="Viewport" parent="FPController/LeftHandController/LeftHandHUD"]
+size = Vector2( 300, 200 )
+transparent_bg = true
+msaa = 2
+usage = 0
+render_target_v_flip = true
+render_target_update_mode = 3
+
+[node name="Screen" type="MeshInstance" parent="FPController/LeftHandController/LeftHandHUD"]
+mesh = SubResource( 1 )
+material/0 = SubResource( 3 )
+
+[node name="StaticBody" type="StaticBody" parent="FPController/LeftHandController/LeftHandHUD"]
+collision_layer = 0
+collision_mask = 0
+script = ExtResource( 12 )
+screen_size = Vector2( 0.15, 0.1 )
+viewport_size = Vector2( 300, 200 )
+
+[node name="CollisionShape" type="CollisionShape" parent="FPController/LeftHandController/LeftHandHUD/StaticBody"]
+shape = SubResource( 4 )
+
 [node name="RightPhysicsHand" parent="FPController/RightHandController" index="0" instance=ExtResource( 2 )]
 collision_layer = 131072
 margin = 0.004
@@ -46,6 +113,35 @@ smooth_rotation = true
 [node name="Function_Jump_movement" parent="FPController/RightHandController" index="4" instance=ExtResource( 1 )]
 jump_button_id = 7
 
+[node name="RightHandHUD" type="Spatial" parent="FPController/RightHandController" index="5"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.11, 0, 0 )
+script = ExtResource( 13 )
+screen_size = Vector2( 0.2, 0.2 )
+viewport_size = Vector2( 400, 400 )
+scene = ExtResource( 15 )
+collision_layer = 0
+
+[node name="Viewport" type="Viewport" parent="FPController/RightHandController/RightHandHUD"]
+size = Vector2( 400, 400 )
+transparent_bg = true
+usage = 0
+render_target_v_flip = true
+render_target_update_mode = 3
+
+[node name="Screen" type="MeshInstance" parent="FPController/RightHandController/RightHandHUD"]
+mesh = SubResource( 5 )
+material/0 = SubResource( 7 )
+
+[node name="StaticBody" type="StaticBody" parent="FPController/RightHandController/RightHandHUD"]
+collision_layer = 0
+collision_mask = 0
+script = ExtResource( 12 )
+screen_size = Vector2( 0.2, 0.2 )
+viewport_size = Vector2( 400, 400 )
+
+[node name="CollisionShape" type="CollisionShape" parent="FPController/RightHandController/RightHandHUD/StaticBody"]
+shape = SubResource( 8 )
+
 [node name="PlayerBody" parent="FPController" instance=ExtResource( 5 )]
 
 [node name="avatar" parent="FPController" instance=ExtResource( 3 )]
@@ -53,5 +149,16 @@ left_controller_path = NodePath("../LeftHandController")
 right_controller_path = NodePath("../RightHandController")
 left_hand_path = NodePath("../LeftHandController/LeftPhysicsHand")
 right_hand_path = NodePath("../RightHandController/RightPhysicsHand")
+
+[connection signal="pointer_entered" from="FPController/LeftHandController/LeftHandHUD/StaticBody" to="FPController/LeftHandController/LeftHandHUD" method="_on_pointer_entered"]
+[connection signal="pointer_exited" from="FPController/LeftHandController/LeftHandHUD/StaticBody" to="FPController/LeftHandController/LeftHandHUD" method="_on_pointer_exited"]
+[connection signal="pointer_moved" from="FPController/LeftHandController/LeftHandHUD/StaticBody" to="FPController/LeftHandController/LeftHandHUD/StaticBody" method="_on_pointer_moved"]
+[connection signal="pointer_pressed" from="FPController/LeftHandController/LeftHandHUD/StaticBody" to="FPController/LeftHandController/LeftHandHUD/StaticBody" method="_on_pointer_pressed"]
+[connection signal="pointer_released" from="FPController/LeftHandController/LeftHandHUD/StaticBody" to="FPController/LeftHandController/LeftHandHUD/StaticBody" method="_on_pointer_released"]
+[connection signal="pointer_entered" from="FPController/RightHandController/RightHandHUD/StaticBody" to="FPController/RightHandController/RightHandHUD" method="_on_pointer_entered"]
+[connection signal="pointer_exited" from="FPController/RightHandController/RightHandHUD/StaticBody" to="FPController/RightHandController/RightHandHUD" method="_on_pointer_exited"]
+[connection signal="pointer_moved" from="FPController/RightHandController/RightHandHUD/StaticBody" to="FPController/RightHandController/RightHandHUD/StaticBody" method="_on_pointer_moved"]
+[connection signal="pointer_pressed" from="FPController/RightHandController/RightHandHUD/StaticBody" to="FPController/RightHandController/RightHandHUD/StaticBody" method="_on_pointer_pressed"]
+[connection signal="pointer_released" from="FPController/RightHandController/RightHandHUD/StaticBody" to="FPController/RightHandController/RightHandHUD/StaticBody" method="_on_pointer_released"]
 
 [editable path="FPController"]

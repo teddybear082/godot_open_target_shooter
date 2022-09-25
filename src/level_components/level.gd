@@ -34,6 +34,7 @@ onready var _level_radial_menu = $Feature_RadialMenu2
 #onready var _camera_system: LevelCameraSystem = $LevelCameraSystem
 onready var _level_name := filename.get_file().get_basename()
 onready var _level_ui: LevelUI = get_node("LevelUI")
+onready var _vr_level_ui = get_node("Player/FPController/RightHandController/RightHandHUD").scene_node
 onready var _pause_menu: MultiPageUIMagager = $PauseMenu/PauseMenu
 onready var _run_summary_page: Control = $RunSummaryPage/RunSummaryPage
 
@@ -56,9 +57,11 @@ func _ready() -> void:
 	
 	_par_time = SaveLoad.load_level_par_time(_level_name)
 	_level_ui.set_label_time_par(_par_time)
+	_vr_level_ui.set_label_time_par(_par_time)
 	_best_time = SaveLoad.load_level_best_time(_level_name)
 	if _best_time != -1.0:
 		_level_ui.set_label_time_best(_best_time)
+		_vr_level_ui.set_label_time_best(_best_time)
 	_run_summary_page.set_level_par_time(_par_time)
 	
 	_connect_signals()
@@ -99,6 +102,9 @@ func _on_enemy_target_hit() -> void:
 		_level_ui.set_label_enemy_hits(
 				_target_manager.target_count_enemy_down(), _target_manager.target_count_enemy()
 		)
+		_vr_level_ui.set_label_enemy_hits(
+				_target_manager.target_count_enemy_down(), _target_manager.target_count_enemy()
+		)
 		_bullet_manager.update_run_accuracy(_target_manager.target_count_enemy_down())
 
 
@@ -107,7 +113,9 @@ func _on_friendly_target_hit() -> void:
 		_level_ui.set_label_friendly_hits(
 				_target_manager.target_count_friendly_down()
 		)
-
+		_vr_level_ui.set_label_friendly_hits(
+				_target_manager.target_count_friendly_down()
+		)
 
 func _on_quit_level() -> void:
 	emit_signal("change_scene_request", "res://src/ui/main_menu/main_menu.tscn")
@@ -147,7 +155,7 @@ func _on_radial_entry_selected(entry):
 			return
 		
 		else:
-			vr_func_pickup._drop_object()
+			vr_func_pickup.drop_object()
 			vr_func_pickup._pick_up_object(_hand_gun)
 			_hand_gun.visible = true
 			_rifle.visible = false
@@ -162,7 +170,7 @@ func _on_radial_entry_selected(entry):
 			return
 			
 		else:
-			vr_func_pickup._drop_object()
+			vr_func_pickup.drop_object()
 			vr_func_pickup._pick_up_object(_rifle)
 			_rifle.visible = true
 			_hand_gun.visible = false
@@ -170,10 +178,10 @@ func _on_radial_entry_selected(entry):
 			
 	if entry == "height":
 		if _is_taller == true:
-			_player.get_node("FPController/PlayerBody").player_height_offset -= .25
+			_player.get_node("FPController/PlayerBody").player_height_offset -= .20
 			_is_taller = false
 		else:
-			_player.get_node("FPController/PlayerBody").player_height_offset += .25
+			_player.get_node("FPController/PlayerBody").player_height_offset += .20
 			_is_taller = true
 ############################
 #      Private Methods     #
@@ -181,6 +189,7 @@ func _on_radial_entry_selected(entry):
 func _set_run_time_raw(seconds: float) -> void:
 	_run_time_raw = seconds
 	_level_ui.set_label_time(_run_time_raw)
+	_vr_level_ui.set_label_time(_run_time_raw)
 
 
 func _init_level_ui() -> void:
@@ -188,6 +197,10 @@ func _init_level_ui() -> void:
 			0, _target_manager.target_count_enemy()
 	)
 	_level_ui.set_label_friendly_hits(0)
+	_vr_level_ui.set_label_enemy_hits(
+			0, _target_manager.target_count_enemy()
+	)
+	_vr_level_ui.set_label_friendly_hits(0)
 
 
 func _connect_signals() -> void:
@@ -237,7 +250,11 @@ func _connect_signals() -> void:
 			_badge_tracker, "badge_earned",
 			_level_ui, "_on_badge_earned"
 	)
-
+	GenUtils.connect_signal_assert_ok(
+			_badge_tracker, "badge_earned",
+			_vr_level_ui, "_on_badge_earned"
+	)
+	
 	# VR Radial Gun Menu
 	GenUtils.connect_signal_assert_ok(
 			_radial_menu, "entry_selected", 
@@ -264,6 +281,9 @@ func _start_run() -> void:
 	
 	_level_ui.set_label_enemy_hits(0, _target_manager.target_count_enemy())
 	_level_ui.set_label_friendly_hits(0)
+
+	_vr_level_ui.set_label_enemy_hits(0, _target_manager.target_count_enemy())
+	_vr_level_ui.set_label_friendly_hits(0)
 
 
 func _update_and_show_run_summary(missed_enemy_penalty_time_total: float, hit_friendly_penalty_time_total: float) -> void:
@@ -317,12 +337,14 @@ func _update_level_best() -> void:
 	if _best_time == -1.0:
 		_best_time = _run_time
 		_level_ui.set_label_time_best(_best_time)
+		_vr_level_ui.set_label_time_best(_best_time)
 		SaveLoad.save_level_best_time(_level_name, _run_time)
 		_run_summary_page.is_new_best = true
 	elif _run_time < _best_time:
 		_run_summary_page.is_new_best = true
 		_best_time = _run_time
 		_level_ui.set_label_time_best(_best_time)
+		_vr_level_ui.set_label_time_best(_best_time)
 		SaveLoad.save_level_best_time(_level_name, _run_time)
 	else:
 		_run_summary_page.is_new_best = false
