@@ -40,6 +40,7 @@ valign = 1
 anchor_bottom = 1.0
 margin_right = 42.0
 size_flags_vertical = 3
+action_mode = 0
 text = "Back"
 
 [node name="BtnStartLevel" type="Button" parent="VBoxContainer/TitleLabel"]
@@ -48,6 +49,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = -232.0
 disabled = true
+action_mode = 0
 text = "Start Level"
 
 [node name="LevelButtons" type="GridContainer" parent="VBoxContainer"]

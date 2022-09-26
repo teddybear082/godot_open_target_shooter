@@ -33,6 +33,7 @@ size_flags_vertical = 0
 [node name="BtnBack" type="Button" parent="VBoxContainer/HBoxContainer"]
 margin_right = 108.0
 margin_bottom = 76.0
+action_mode = 0
 text = "Back"
 __meta__ = {
 "_edit_use_anchors_": true

@@ -1,0 +1,48 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://src/ui/multi_page_ui/manager.gd" type="Script" id=1]
+[ext_resource path="res://src/ui/menu.theme" type="Theme" id=2]
+[ext_resource path="res://src/ui/controls_page/controls_page.tscn" type="PackedScene" id=9]
+[ext_resource path="res://src/ui/main_menu/credits_page/credits_page.tscn" type="PackedScene" id=11]
+[ext_resource path="res://src/ui/settings_page/settings_page.tscn" type="PackedScene" id=12]
+[ext_resource path="res://src/ui/main_menu/level_select/level_select.tscn" type="PackedScene" id=13]
+[ext_resource path="res://src/ui/main_menu/home/home.tscn" type="PackedScene" id=15]
+
+[node name="MainMenu" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+theme = ExtResource( 2 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="Pages" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="Home" parent="Pages" instance=ExtResource( 15 )]
+
+[node name="LevelSelect" parent="Pages" instance=ExtResource( 13 )]
+visible = false
+cords = Vector2( 1, 0 )
+_back_page_name = "Home"
+
+[node name="ControlsPage" parent="Pages" instance=ExtResource( 9 )]
+visible = false
+cords = Vector2( -1, 0 )
+_back_page_name = "Home"
+
+[node name="SettingsPage" parent="Pages" instance=ExtResource( 12 )]
+visible = false
+cords = Vector2( 0, 1 )
+_back_page_name = "Home"
+
+[node name="CreditsPage" parent="Pages" instance=ExtResource( 11 )]
+visible = false
+cords = Vector2( 0, -1 )
+_back_page_name = "Home"

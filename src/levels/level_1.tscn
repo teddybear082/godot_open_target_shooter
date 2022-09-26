@@ -9,7 +9,7 @@
 [ext_resource path="res://src/weapons/PickableRifle.tscn" type="PackedScene" id=7]
 [ext_resource path="res://src/level_components/environment/shipping_container/shipping_container.tscn" type="PackedScene" id=8]
 [ext_resource path="res://src/level_components/targets/popup_target/popup_target.tscn" type="PackedScene" id=9]
-[ext_resource path="res://src/actor/player/VRPlayer.tscn" type="PackedScene" id=10]
+[ext_resource path="res://src/actor/player/VRPlayer2.tscn" type="PackedScene" id=10]
 [ext_resource path="res://src/level_components/environment/wood_stuff/crate_medium.tscn" type="PackedScene" id=11]
 [ext_resource path="res://src/weapons/PickableHandGun.tscn" type="PackedScene" id=12]
 [ext_resource path="res://src/level_components/floor_mats/concrete_floor_16x16.material" type="Material" id=13]
@@ -31,14 +31,14 @@ size = Vector2( 16, 16 )
 resource_local_to_scene = true
 size = Vector2( 0.15, 0.1 )
 
-[sub_resource type="ViewportTexture" id=12]
+[sub_resource type="ViewportTexture" id=5]
 
 [sub_resource type="SpatialMaterial" id=6]
 resource_local_to_scene = true
 flags_transparent = true
 flags_unshaded = true
 params_cull_mode = 2
-albedo_texture = SubResource( 12 )
+albedo_texture = SubResource( 5 )
 
 [sub_resource type="BoxShape" id=7]
 resource_local_to_scene = true
@@ -48,14 +48,14 @@ extents = Vector3( 0.075, 0.05, 0.01 )
 resource_local_to_scene = true
 size = Vector2( 0.2, 0.2 )
 
-[sub_resource type="ViewportTexture" id=13]
+[sub_resource type="ViewportTexture" id=9]
 
 [sub_resource type="SpatialMaterial" id=10]
 resource_local_to_scene = true
 flags_transparent = true
 flags_unshaded = true
 params_cull_mode = 2
-albedo_texture = SubResource( 13 )
+albedo_texture = SubResource( 9 )
 
 [sub_resource type="BoxShape" id=11]
 resource_local_to_scene = true
@@ -399,6 +399,20 @@ pause_mode = 2
 stream = ExtResource( 20 )
 bus = "SoundEffects"
 
+[node name="PickableHandGun" parent="." instance=ExtResource( 12 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -21.1325, 0, 4.89882 )
+
+[node name="Feature_RadialMenu" parent="." instance=ExtResource( 42 )]
+radial_controller_path = NodePath("../Player/FPController/RightHandController")
+menu_entries = [ "height", "rifle", "pistol" ]
+
+[node name="PickableRifle" parent="." instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -20.4931, 0, 4.92326 )
+
+[node name="Feature_RadialMenu2" parent="." instance=ExtResource( 42 )]
+radial_controller_path = NodePath("../Player/FPController/LeftHandController")
+menu_entries = [ "quit", "level1", "level2", "level3", "level4", "level5" ]
+
 [node name="Player" parent="." instance=ExtResource( 10 )]
 
 [node name="Screen" parent="Player/FPController/LeftHandController/LeftHandHUD" index="1"]
@@ -414,20 +428,6 @@ material/0 = SubResource( 10 )
 
 [node name="CollisionShape" parent="Player/FPController/RightHandController/RightHandHUD/StaticBody" index="0"]
 shape = SubResource( 11 )
-
-[node name="PickableHandGun" parent="." instance=ExtResource( 12 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -21.1325, 0, 4.89882 )
-
-[node name="Feature_RadialMenu" parent="." instance=ExtResource( 42 )]
-radial_controller_path = NodePath("../Player/FPController/RightHandController")
-menu_entries = [ "height", "rifle", "pistol" ]
-
-[node name="PickableRifle" parent="." instance=ExtResource( 7 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -20.4931, 0, 4.92326 )
-
-[node name="Feature_RadialMenu2" parent="." instance=ExtResource( 42 )]
-radial_controller_path = NodePath("../Player/FPController/LeftHandController")
-menu_entries = [ "quit", "level1", "level2", "level3", "level4", "level5" ]
 
 [connection signal="player_passed_through" from="RangeEntrance" to="." method="_on_player_passed_through_range_entrance"]
 [connection signal="player_passed_through" from="RangeExit" to="." method="_on_player_passed_through_range_exit"]
