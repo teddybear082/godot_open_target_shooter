@@ -66,9 +66,23 @@ func _ready() -> void:
 	_connect_signals()
 	_init_level_ui()
 
-	#_rifle.visible = false
-	#_hand_gun.visible = false
-	
+	if UserPreferences.left_handed_mode == true: 
+		var left_controller = _player.get_node("FPController/LeftHandController")
+		var right_controller = _player.get_node("FPController/RightHandController")
+		var left_controller_children = left_controller.get_children()
+		var right_controller_children = right_controller.get_children()
+		for child in left_controller_children:
+			if child.is_in_group("movement_providers"):
+				left_controller.remove_child(child)
+				right_controller.add_child(child)
+		for child in right_controller_children:
+			if child.is_in_group("movement_providers"):
+				right_controller.remove_child(child)
+				left_controller.add_child(child)
+		_radial_menu.controller = left_controller
+		_level_radial_menu.controller = right_controller
+		_vr_weapon_controller.primary_hand_function_pickup = left_controller.get_node("Function_Pickup")
+		
 func _process(delta: float) -> void:
 	if _is_player_on_range:
 		_set_run_time_raw(_run_time_raw + delta)

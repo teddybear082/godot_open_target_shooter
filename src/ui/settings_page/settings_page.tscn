@@ -60,9 +60,9 @@ custom_constants/separation = 50
 alignment = 1
 
 [node name="Audio" type="GridContainer" parent="VBoxContainer/PanelContainer/VBoxContainer"]
-margin_top = 110.0
+margin_top = 83.0
 margin_right = 765.0
-margin_bottom = 302.0
+margin_bottom = 275.0
 size_flags_horizontal = 3
 size_flags_vertical = 4
 custom_constants/vseparation = 20
@@ -223,14 +223,14 @@ margin_bottom = 33.0
 text = "100"
 
 [node name="HSeparator" type="HSeparator" parent="VBoxContainer/PanelContainer/VBoxContainer"]
-margin_top = 352.0
+margin_top = 325.0
 margin_right = 765.0
-margin_bottom = 356.0
+margin_bottom = 329.0
 
 [node name="Gameplay" type="GridContainer" parent="VBoxContainer/PanelContainer/VBoxContainer"]
-margin_top = 406.0
+margin_top = 379.0
 margin_right = 765.0
-margin_bottom = 581.0
+margin_bottom = 607.0
 size_flags_horizontal = 3
 size_flags_vertical = 4
 custom_constants/vseparation = 20
@@ -309,16 +309,29 @@ margin_right = 302.0
 margin_bottom = 175.0
 size_flags_horizontal = 0
 
+[node name="Label4" type="Label" parent="VBoxContainer/PanelContainer/VBoxContainer/Gameplay"]
+margin_top = 195.0
+margin_right = 188.0
+margin_bottom = 228.0
+text = "Left Handed"
+
+[node name="LeftHandedCheckButton" type="CheckButton" parent="VBoxContainer/PanelContainer/VBoxContainer/Gameplay"]
+margin_left = 238.0
+margin_top = 195.0
+margin_right = 302.0
+margin_bottom = 228.0
+size_flags_horizontal = 0
+
 [node name="HSeparator2" type="HSeparator" parent="VBoxContainer/PanelContainer/VBoxContainer"]
-margin_top = 631.0
+margin_top = 657.0
 margin_right = 765.0
-margin_bottom = 635.0
+margin_bottom = 661.0
 
 [node name="Video" type="GridContainer" parent="VBoxContainer/PanelContainer/VBoxContainer"]
 margin_left = 161.0
-margin_top = 685.0
+margin_top = 711.0
 margin_right = 603.0
-margin_bottom = 792.0
+margin_bottom = 818.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 custom_constants/vseparation = 20
@@ -412,6 +425,7 @@ __meta__ = {
 [connection signal="value_changed" from="VBoxContainer/PanelContainer/VBoxContainer/Gameplay/HBoxContainer/SliderMouseSense" to="." method="_on_slider_mouse_sense_value_changed"]
 [connection signal="pressed" from="VBoxContainer/PanelContainer/VBoxContainer/Gameplay/ToggleSprintCheckButton" to="." method="_on_check_btn_toggle_sprint_pressed"]
 [connection signal="pressed" from="VBoxContainer/PanelContainer/VBoxContainer/Gameplay/ToggleAimCheckButton" to="." method="_on_check_btn_toggle_aim_pressed"]
+[connection signal="pressed" from="VBoxContainer/PanelContainer/VBoxContainer/Gameplay/LeftHandedCheckButton" to="." method="_on_LeftHandedCheckButton_pressed"]
 [connection signal="pressed" from="VBoxContainer/PanelContainer/VBoxContainer/Video/LeftColumn/BorderlessCheckButton" to="." method="_on_check_btn_borderless_pressed"]
 [connection signal="pressed" from="VBoxContainer/PanelContainer/VBoxContainer/Video/LeftColumn/FullScreenCheckButton" to="." method="_on_check_btn_fullscreen_pressed"]
 [connection signal="pressed" from="VBoxContainer/PanelContainer/VBoxContainer/Video/LeftColumn/VSyncCheckButton" to="." method="_on_check_btn_vsync_pressed"]

@@ -29,6 +29,7 @@ var vsync: bool = true setget set_vsync
 var fxaa: bool = false setget set_fxaa
 var msaa: int = Viewport.MSAA_4X setget set_msaa
 
+var left_handed_mode: bool = false setget set_lefthanded_mode, get_lefthanded_mode
 
 ############################
 # Engine Callback Methods  #
@@ -77,6 +78,14 @@ func set_msaa(val: int) -> void:
 	get_viewport().msaa = msaa
 
 
+func set_lefthanded_mode(val: bool) -> void:
+	left_handed_mode = val
+	
+	
+func get_lefthanded_mode() -> bool:
+	return left_handed_mode
+	
+	
 func save() -> void:
 	var file_checker: File = File.new()
 	if not file_checker.file_exists("user://user_prefs.cfg"):
@@ -102,6 +111,7 @@ func save() -> void:
 		prefs_cfg.set_value("user_prefs", "vsync", vsync)
 		prefs_cfg.set_value("user_prefs", "fxaa", fxaa)
 		prefs_cfg.set_value("user_prefs", "msaa", msaa)
+		prefs_cfg.set_value("user_prefs", "left_handed", left_handed_mode)
 		
 		err = prefs_cfg.save("user://user_prefs.cfg")
 
@@ -139,4 +149,4 @@ func _load() -> void:
 		set_vsync(prefs_cfg.get_value("user_prefs", "vsync"))
 		set_fxaa(prefs_cfg.get_value("user_prefs", "fxaa"))
 		set_msaa(prefs_cfg.get_value("user_prefs", "msaa"))
-
+		set_lefthanded_mode(prefs_cfg.get_value("user_prefs", "left_handed"))

@@ -275,6 +275,8 @@ shape = SubResource( 113 )
 script = ExtResource( 2 )
 icon = ExtResource( 10 )
 bullet_packed_scene = ExtResource( 13 )
+bullet_speed = 80.0
+magazine_size = 20
 
 [node name="Weapon" type="Spatial" parent="WeaponRifle"]
 

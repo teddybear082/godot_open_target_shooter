@@ -13,6 +13,7 @@ onready var _slider_audio_ui: HSlider = find_node("SliderAudioUI")
 onready var _slider_mouse_sensitivity: HSlider = find_node("SliderMouseSense")
 onready var _check_btn_toggle_sprint: CheckButton = find_node("ToggleSprintCheckButton")
 onready var _check_btn_toggle_aim: CheckButton = find_node("ToggleAimCheckButton")
+onready var _check_btn_toggle_left_handed: CheckButton = find_node("LeftHandedCheckButton")
 
 onready var _check_btn_borderless: CheckButton = find_node("BorderlessCheckButton")
 onready var _check_btn_fullscreen: CheckButton = find_node("FullScreenCheckButton")
@@ -33,6 +34,7 @@ func _ready() -> void:
 	_slider_mouse_sensitivity.value = UserPreferences.mouse_sensitivity
 	_check_btn_toggle_sprint.pressed = UserPreferences.toggle_sprint
 	_check_btn_toggle_aim.pressed = UserPreferences.toggle_aim
+	_check_btn_toggle_left_handed.pressed = UserPreferences.left_handed_mode
 	
 	_check_btn_borderless.pressed = UserPreferences.borderless_window
 	_check_btn_fullscreen.pressed  = UserPreferences.fullscreen_window
@@ -98,3 +100,8 @@ func _on_check_btn_fxaa_pressed() -> void:
 func _on_option_btn_msaa_item_selected(index: int) -> void:
 	if active:
 		UserPreferences.msaa = index
+
+
+func _on_LeftHandedCheckButton_pressed():
+	if active:
+		UserPreferences.left_handed_mode = _check_btn_toggle_left_handed.pressed 

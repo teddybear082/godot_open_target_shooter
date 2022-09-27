@@ -237,6 +237,7 @@ script = ExtResource( 2 )
 slot_type = 1
 icon = ExtResource( 10 )
 bullet_packed_scene = ExtResource( 12 )
+bullet_speed = 65.0
 bullet_damage = 7
 magazine_size = 10
 
