@@ -1,7 +1,6 @@
-[gd_scene load_steps=27 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://src/weapons/weapon.gd" type="Script" id=2]
-[ext_resource path="res://src/weapons/VRWeaponController.gd" type="Script" id=3]
 [ext_resource path="res://src/weapons/weapon.material" type="Material" id=4]
 [ext_resource path="res://raw_assets/sfx/gunshot/gunshot_1.wav" type="AudioStream" id=5]
 [ext_resource path="res://raw_assets/sfx/misc/empty_gun_click.wav" type="AudioStream" id=6]
@@ -233,10 +232,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.03, 0 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0121875, 0 )
 shape = SubResource( 96 )
 
-[node name="VRWeaponController" type="Spatial" parent="."]
-script = ExtResource( 3 )
-
-[node name="WeaponPistol" type="Spatial" parent="VRWeaponController"]
+[node name="WeaponPistol" type="Spatial" parent="."]
 script = ExtResource( 2 )
 slot_type = 1
 icon = ExtResource( 10 )
@@ -244,18 +240,18 @@ bullet_packed_scene = ExtResource( 12 )
 bullet_damage = 7
 magazine_size = 10
 
-[node name="Weapon" type="Spatial" parent="VRWeaponController/WeaponPistol"]
+[node name="Weapon" type="Spatial" parent="WeaponPistol"]
 
-[node name="MeshInstance" type="MeshInstance" parent="VRWeaponController/WeaponPistol/Weapon"]
+[node name="MeshInstance" type="MeshInstance" parent="WeaponPistol/Weapon"]
 transform = Transform( -6.55671e-09, 0, -0.15, 0, 0.15, 0, 0.15, 0, -6.55671e-09, 0, 0, 0 )
 mesh = SubResource( 97 )
 skeleton = NodePath("")
 material/0 = ExtResource( 4 )
 
-[node name="BulletSpawn" type="Spatial" parent="VRWeaponController/WeaponPistol/Weapon"]
+[node name="BulletSpawn" type="Spatial" parent="WeaponPistol/Weapon"]
 transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -2.34723e-08, 0.0344667, -0.111594 )
 
-[node name="Particles" type="Particles" parent="VRWeaponController/WeaponPistol/Weapon/BulletSpawn"]
+[node name="Particles" type="Particles" parent="WeaponPistol/Weapon/BulletSpawn"]
 cast_shadow = 0
 emitting = false
 amount = 24
@@ -266,36 +262,36 @@ visibility_aabb = AABB( -0.0972793, -0.106429, -0.153022, 0.194559, 0.212857, 0.
 process_material = SubResource( 9 )
 draw_pass_1 = SubResource( 11 )
 
-[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="VRWeaponController/WeaponPistol/Weapon/BulletSpawn"]
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="WeaponPistol/Weapon/BulletSpawn"]
 stream = SubResource( 15 )
 unit_size = 15.0
 bus = "SoundEffects"
 
-[node name="CameraTraumaCauser" parent="VRWeaponController/WeaponPistol/Weapon/BulletSpawn" instance=ExtResource( 8 )]
+[node name="CameraTraumaCauser" parent="WeaponPistol/Weapon/BulletSpawn" instance=ExtResource( 8 )]
 transform = Transform( -1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0, 0 )
 _trauma_max = 0.4
 _trauma_jump = 0.3
 
-[node name="CollisionShape" type="CollisionShape" parent="VRWeaponController/WeaponPistol/Weapon/BulletSpawn/CameraTraumaCauser"]
+[node name="CollisionShape" type="CollisionShape" parent="WeaponPistol/Weapon/BulletSpawn/CameraTraumaCauser"]
 shape = SubResource( 12 )
 
-[node name="GripLeftHand" type="Position3D" parent="VRWeaponController/WeaponPistol/Weapon"]
+[node name="GripLeftHand" type="Position3D" parent="WeaponPistol/Weapon"]
 transform = Transform( 0.762023, -0.646635, -0.0344172, 0.0105741, -0.040717, 0.999115, -0.647463, -0.761713, -0.0241897, -0.007, -0.031, 0.098 )
 
-[node name="GripRightHand" type="Position3D" parent="VRWeaponController/WeaponPistol/Weapon"]
+[node name="GripRightHand" type="Position3D" parent="WeaponPistol/Weapon"]
 transform = Transform( 0.990866, -0.0146489, -0.134054, 0.134763, 0.0715341, 0.988292, -0.00488803, -0.997331, 0.0728548, 0.024, -0.039, 0.086 )
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="VRWeaponController/WeaponPistol"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="WeaponPistol"]
 playback_process_mode = 0
 anims/RESET = SubResource( 2 )
 anims/fire = SubResource( 99 )
 anims/reload_load = SubResource( 16 )
 anims/reload_unload = SubResource( 13 )
 
-[node name="AudioStreamReload" type="AudioStreamPlayer3D" parent="VRWeaponController/WeaponPistol"]
+[node name="AudioStreamReload" type="AudioStreamPlayer3D" parent="WeaponPistol"]
 stream = ExtResource( 9 )
 bus = "SoundEffects"
 
-[node name="AudioStreamEmptyClick" type="AudioStreamPlayer3D" parent="VRWeaponController/WeaponPistol"]
+[node name="AudioStreamEmptyClick" type="AudioStreamPlayer3D" parent="WeaponPistol"]
 stream = ExtResource( 6 )
 bus = "SoundEffects"

@@ -99,6 +99,9 @@ viewport_size = Vector2( 300, 200 )
 [node name="CollisionShape" type="CollisionShape" parent="FPController/LeftHandController/LeftHandHUD/StaticBody"]
 shape = SubResource( 4 )
 
+[node name="Function_Jump_movement" parent="FPController/LeftHandController" index="4" instance=ExtResource( 1 )]
+jump_button_id = 14
+
 [node name="RightPhysicsHand" parent="FPController/RightHandController" index="0" instance=ExtResource( 2 )]
 collision_layer = 131072
 margin = 0.004
@@ -110,10 +113,7 @@ smooth_rotation = true
 
 [node name="Function_Crouch_movement" parent="FPController/RightHandController" index="3" instance=ExtResource( 9 )]
 
-[node name="Function_Jump_movement" parent="FPController/RightHandController" index="4" instance=ExtResource( 1 )]
-jump_button_id = 7
-
-[node name="RightHandHUD" type="Spatial" parent="FPController/RightHandController" index="5"]
+[node name="RightHandHUD" type="Spatial" parent="FPController/RightHandController" index="4"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.11, 0, 0 )
 script = ExtResource( 13 )
 screen_size = Vector2( 0.2, 0.2 )

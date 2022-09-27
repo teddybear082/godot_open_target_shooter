@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=2]
+[gd_scene load_steps=31 format=2]
 
 [ext_resource path="res://world_env.tres" type="Environment" id=1]
 [ext_resource path="res://src/level_components/level.gd" type="Script" id=2]
@@ -13,6 +13,7 @@
 [ext_resource path="res://src/level_components/environment/wood_stuff/crate_medium.tscn" type="PackedScene" id=11]
 [ext_resource path="res://src/weapons/PickableHandGun.tscn" type="PackedScene" id=12]
 [ext_resource path="res://src/level_components/floor_mats/concrete_floor_16x16.material" type="Material" id=13]
+[ext_resource path="res://src/weapons/VRWeaponController.gd" type="Script" id=14]
 [ext_resource path="res://src/level_components/level_sub_managers/bullet_manager.gd" type="Script" id=17]
 [ext_resource path="res://src/level_components/level_sub_managers/target_manager.gd" type="Script" id=18]
 [ext_resource path="res://src/level_components/level_sub_managers/badge_tracker.gd" type="Script" id=19]
@@ -430,6 +431,7 @@ material/0 = SubResource( 10 )
 shape = SubResource( 11 )
 
 [node name="VRWeaponController" type="Node" parent="."]
+script = ExtResource( 14 )
 
 [connection signal="player_passed_through" from="RangeEntrance" to="." method="_on_player_passed_through_range_entrance"]
 [connection signal="player_passed_through" from="RangeExit" to="." method="_on_player_passed_through_range_exit"]

@@ -1,5 +1,6 @@
-[gd_scene load_steps=22 format=2]
+[gd_scene load_steps=23 format=2]
 
+[ext_resource path="res://src/weapons/VRWeaponController.gd" type="Script" id=1]
 [ext_resource path="res://src/level_components/floor_mats/concrete_floor_16x16.material" type="Material" id=2]
 [ext_resource path="res://src/ui/level_ui/level_ui.tscn" type="PackedScene" id=3]
 [ext_resource path="res://src/level_components/targets/popup_target/popup_target.tscn" type="PackedScene" id=4]
@@ -674,6 +675,9 @@ menu_entries = [ "height", "rifle", "pistol" ]
 [node name="Level_RadialMenu" parent="." instance=ExtResource( 17 )]
 radial_controller_path = NodePath("../Player/FPController/LeftHandController")
 menu_entries = [ "home", "level1", "level2", "level3", "level4", "level5" ]
+
+[node name="VRWeaponController" type="Node" parent="."]
+script = ExtResource( 1 )
 
 [connection signal="player_passed_through" from="RangeEntrance" to="." method="_on_player_passed_through_range_entrance"]
 [connection signal="player_passed_through" from="RangeExit" to="." method="_on_player_passed_through_range_exit"]

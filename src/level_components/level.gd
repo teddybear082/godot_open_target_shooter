@@ -27,8 +27,7 @@ onready var _primary_light: DirectionalLight = $WorldEnvironment/DirectionalLigh
 onready var _player = $Player
 onready var _hand_gun = $PickableHandGun
 onready var _rifle = $PickableRifle
-onready var _hand_gun_controller = $PickableHandGun/VRWeaponController
-onready var _rifle_controller = $PickableRifle/VRWeaponController
+onready var _vr_weapon_controller = $VRWeaponController
 onready var _radial_menu = $Weapon_RadialMenu
 onready var _level_radial_menu = $Level_RadialMenu
 #onready var _camera_system: LevelCameraSystem = $LevelCameraSystem
@@ -92,6 +91,8 @@ func _on_player_passed_through_range_exit() -> void:
 
 
 func _on_player_shooting(player_weapon: Weapon) -> void:
+	if player_weapon.ammo_loaded <= 0:
+		return
 	_bullet_manager.spawn_bullet(player_weapon, _player)
 	if _is_player_on_range:
 		_bullet_manager.update_run_accuracy(_target_manager.target_count_enemy_down())
@@ -153,6 +154,7 @@ func _on_radial_entry_selected(entry):
 			
 		if vr_func_pickup.picked_up_object == null:
 			vr_func_pickup._pick_up_object(_hand_gun)
+			_vr_weapon_controller.switch_current_weapon(_hand_gun)
 			return
 		
 		else:
@@ -160,6 +162,7 @@ func _on_radial_entry_selected(entry):
 			vr_func_pickup._pick_up_object(_hand_gun)
 			_hand_gun.visible = true
 			_rifle.visible = false
+			_vr_weapon_controller.switch_current_weapon(_hand_gun)
 			return			
 	
 	if entry == "rifle":
@@ -168,6 +171,7 @@ func _on_radial_entry_selected(entry):
 			
 		if vr_func_pickup.picked_up_object == null:
 			vr_func_pickup._pick_up_object(_rifle)
+			_vr_weapon_controller.switch_current_weapon(_rifle)
 			return
 			
 		else:
@@ -175,6 +179,7 @@ func _on_radial_entry_selected(entry):
 			vr_func_pickup._pick_up_object(_rifle)
 			_rifle.visible = true
 			_hand_gun.visible = false
+			_vr_weapon_controller.switch_current_weapon(_rifle)
 			return
 			
 	if entry == "height":
@@ -208,12 +213,7 @@ func _init_level_ui() -> void:
 func _connect_signals() -> void:
 	# Player
 	GenUtils.connect_signal_assert_ok(
-			_hand_gun_controller, "shooting", 
-			self, "_on_player_shooting"
-	)
-	
-	GenUtils.connect_signal_assert_ok(
-			_rifle_controller, "shooting", 
+			_vr_weapon_controller, "shooting", 
 			self, "_on_player_shooting"
 	)
 	
