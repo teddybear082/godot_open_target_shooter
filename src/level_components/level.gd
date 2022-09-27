@@ -71,6 +71,7 @@ func _ready() -> void:
 		var right_controller = _player.get_node("FPController/RightHandController")
 		var left_controller_children = left_controller.get_children()
 		var right_controller_children = right_controller.get_children()
+		
 		for child in left_controller_children:
 			if child.is_in_group("movement_providers"):
 				left_controller.remove_child(child)

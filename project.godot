@@ -410,7 +410,7 @@ _global_script_class_icons={
 
 [application]
 
-config/name="open_target_shooter"
+config/name="open_target_shooter_VR"
 run/main_scene="res://src/main/main.tscn"
 config/icon="res://icon.png"
 
