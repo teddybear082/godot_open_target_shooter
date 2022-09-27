@@ -667,13 +667,13 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -17.5377, 0, 0 )
 [node name="PickableHandGun" parent="." instance=ExtResource( 16 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -15.7024, 0, 0 )
 
-[node name="Feature_RadialMenu" parent="." instance=ExtResource( 17 )]
+[node name="Weapon_RadialMenu" parent="." instance=ExtResource( 17 )]
 radial_controller_path = NodePath("../Player/FPController/RightHandController")
 menu_entries = [ "height", "rifle", "pistol" ]
 
-[node name="Feature_RadialMenu2" parent="." instance=ExtResource( 17 )]
+[node name="Level_RadialMenu" parent="." instance=ExtResource( 17 )]
 radial_controller_path = NodePath("../Player/FPController/LeftHandController")
-menu_entries = [ "quit", "level1", "level2", "level3", "level4", "level5" ]
+menu_entries = [ "home", "level1", "level2", "level3", "level4", "level5" ]
 
 [connection signal="player_passed_through" from="RangeEntrance" to="." method="_on_player_passed_through_range_entrance"]
 [connection signal="player_passed_through" from="RangeExit" to="." method="_on_player_passed_through_range_exit"]

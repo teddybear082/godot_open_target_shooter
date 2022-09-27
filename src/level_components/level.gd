@@ -29,12 +29,12 @@ onready var _hand_gun = $PickableHandGun
 onready var _rifle = $PickableRifle
 onready var _hand_gun_controller = $PickableHandGun/VRWeaponController
 onready var _rifle_controller = $PickableRifle/VRWeaponController
-onready var _radial_menu = $Feature_RadialMenu
-onready var _level_radial_menu = $Feature_RadialMenu2
+onready var _radial_menu = $Weapon_RadialMenu
+onready var _level_radial_menu = $Level_RadialMenu
 #onready var _camera_system: LevelCameraSystem = $LevelCameraSystem
 onready var _level_name := filename.get_file().get_basename()
 onready var _level_ui: LevelUI = get_node("LevelUI")
-onready var _vr_level_ui = get_node("Player/FPController/RightHandController/RightHandHUD").scene_node
+onready var _vr_level_ui = get_node("Player/FPController/RightHandController/RightHandHUD").get_scene_instance()
 onready var _pause_menu: MultiPageUIMagager = $PauseMenu/PauseMenu
 onready var _run_summary_page: Control = $RunSummaryPage/RunSummaryPage
 
@@ -118,26 +118,27 @@ func _on_friendly_target_hit() -> void:
 		)
 
 func _on_quit_level() -> void:
-	emit_signal("change_scene_request", "res://src/ui/main_menu/main_menu.tscn")
+	emit_signal("change_scene_request", "res://src/ui/main_menu/main_menu_vr.tscn")
 
 func _on_radial_level_entry_selected(entry):
-	if entry == "quit":
-		get_tree().quit()
+	if entry == "home":
+		#get_tree().quit()
+		_on_quit_level()
 	if entry == "level1":
 		emit_signal("change_scene_request", "res://src/levels/level_1.tscn")
-		get_tree().change_scene("res://src/levels/level_1.tscn")
+		#get_tree().change_scene("res://src/levels/level_1.tscn")
 	if entry == "level2":
 		emit_signal("change_scene_request", "res://src/levels/level_2.tscn")
-		get_tree().change_scene("res://src/levels/level_2.tscn")
+		#get_tree().change_scene("res://src/levels/level_2.tscn")
 	if entry == "level3":
 		emit_signal("change_scene_request", "res://src/levels/level_3.tscn")
-		get_tree().change_scene("res://src/levels/level_3.tscn")
+		#get_tree().change_scene("res://src/levels/level_3.tscn")
 	if entry == "level4":
 		emit_signal("change_scene_request", "res://src/levels/level_4.tscn")
-		get_tree().change_scene("res://src/levels/level_4.tscn")
+		#get_tree().change_scene("res://src/levels/level_4.tscn")
 	if entry == "level5":
 		emit_signal("change_scene_request", "res://src/levels/level_5.tscn")
-		get_tree().change_scene("res://src/levels/level_5.tscn")
+		#get_tree().change_scene("res://src/levels/level_5.tscn")
 
 func _on_radial_entry_selected(entry):
 	var radial_controller = _radial_menu.controller
@@ -201,7 +202,8 @@ func _init_level_ui() -> void:
 			0, _target_manager.target_count_enemy()
 	)
 	_vr_level_ui.set_label_friendly_hits(0)
-
+	
+	
 
 func _connect_signals() -> void:
 	# Player
@@ -297,8 +299,7 @@ func _update_and_show_run_summary(missed_enemy_penalty_time_total: float, hit_fr
 			_bullet_manager.run_bullet_count, _bullet_manager.run_longest_shot
 	)
 	_run_summary_page.update_run_badges(_badge_tracker.get_run_badges())
-	_run_summary_page.popup()
-
+	#_run_summary_page.popup()
 
 func _finish_run() -> void:
 	MusicManager.transition_to_track(

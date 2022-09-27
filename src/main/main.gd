@@ -13,7 +13,11 @@ const _poll_time: float = 0.02
 onready var _anim_player: AnimationPlayer = get_node("AnimationPlayer")
 onready var _fade_rect: ColorRect = get_node("CanvasLayer/ColorRect")
 onready var _loader_poll_timer: Timer = get_node("LoaderPollTimer")
-
+onready var _level1 = preload("res://src/levels/level_1.tscn")
+onready var _level2 = preload("res://src/levels/level_2.tscn")
+onready var _level3 = preload("res://src/levels/level_3.tscn")
+onready var _level4 = preload("res://src/levels/level_4.tscn")
+onready var _level5 = preload("res://src/levels/level_5.tscn")
 
 ############################
 # Engine Callback Methods  #
