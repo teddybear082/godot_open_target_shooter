@@ -18,6 +18,8 @@ VR CONTROLS
 
 VR controller mapping is found in the "controls" menu.  A left handed mode is found in the "settings" menu, which switches your primary weapon hand to the left hand and switches the side of the hand radial menus.
 
+Teleport movement is supported, use your non-gun hand A/X button to teleport.  Snap turning can also be enabled in the "settings" menu.
+
 To select your gun, open your weapon radial menu by holding your primary VR controller Y/B button and hovering your hand over the pistol or rifle icon.  Then let go of the radial menu button.
 
 To change your level or go back to the main menu once you are in game, open your level select radial menu by holding your secondary VR controller Y/B button and hovering your hand over either the home icon (go back to main menu) or one of the numbers (jump to that level).
@@ -27,3 +29,5 @@ Reload your primary weapon by pressing the A/X button on your primary controller
 You can theoretically double wield weapons but there will be bugs with that as the original game was intended for the player to hold just one weapon at once.
 
 Toggle crouch by clicking your right thumb stick, jump by clicking your left thumb stick.
+
+If you feel you need to be a bit taller or that your full body avatar looks crouched, open your gun hand radial menu and select the Godot icon to toggle the height adjustment.
