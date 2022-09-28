@@ -7,7 +7,7 @@
 [ext_resource path="res://src/ui/pause_menu/pause_menu.tscn" type="PackedScene" id=5]
 [ext_resource path="res://src/level_components/level_sub_managers/target_manager.gd" type="Script" id=6]
 [ext_resource path="res://src/level_components/range_thresholds/range_threshold.tscn" type="PackedScene" id=7]
-[ext_resource path="res://src/actor/player/VRPlayer.tscn" type="PackedScene" id=8]
+[ext_resource path="res://src/actor/player/VRPlayer2.tscn" type="PackedScene" id=8]
 [ext_resource path="res://src/level_components/environment/wood_stuff/crate_medium.tscn" type="PackedScene" id=9]
 [ext_resource path="res://src/level_components/level.gd" type="Script" id=10]
 [ext_resource path="res://world_env.tres" type="Environment" id=11]
@@ -660,13 +660,13 @@ pause_mode = 2
 stream = ExtResource( 21 )
 bus = "SoundEffects"
 
-[node name="Player" parent="." instance=ExtResource( 8 )]
-
 [node name="PickableRifle" parent="." instance=ExtResource( 18 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -17.5377, 0, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -17.5377, 3.02111, 3.34576 )
 
 [node name="PickableHandGun" parent="." instance=ExtResource( 16 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -15.7024, 0, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -15.7024, 2.98435, 3.26406 )
+
+[node name="Player" parent="." instance=ExtResource( 8 )]
 
 [node name="Weapon_RadialMenu" parent="." instance=ExtResource( 17 )]
 radial_controller_path = NodePath("../Player/FPController/RightHandController")

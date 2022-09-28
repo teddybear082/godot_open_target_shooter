@@ -259,6 +259,7 @@ scene = ExtResource( 6 )
 
 [node name="Viewport" parent="main_menu_viewport" index="0"]
 size = Vector2( 1980, 1080 )
+render_target_update_mode = 1
 
 [node name="Screen" parent="main_menu_viewport" index="1"]
 mesh = SubResource( 3 )

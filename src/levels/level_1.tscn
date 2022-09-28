@@ -367,10 +367,10 @@ stream = ExtResource( 20 )
 bus = "SoundEffects"
 
 [node name="PickableHandGun" parent="." instance=ExtResource( 12 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -21.1325, 0, 4.89882 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -23.3371, 2.98729, 4.89882 )
 
 [node name="PickableRifle" parent="." instance=ExtResource( 7 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -20.4931, 0, 4.92326 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -24.3789, 2.84027, 4.92326 )
 
 [node name="Player" parent="." instance=ExtResource( 10 )]
 

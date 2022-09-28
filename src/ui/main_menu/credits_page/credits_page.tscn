@@ -209,6 +209,9 @@ margin_bottom = 1563.0
 text = "VR Conversion
 By: teddybear082
 License: MIT"
+align = 1
+valign = 1
+autowrap = true
 
 [node name="LabelCredit13" type="Label" parent="VBoxContainer/PanelContainer/VBoxContainer/ScrollContainer/VBoxContainer"]
 margin_top = 1588.0
@@ -218,6 +221,9 @@ text = "VR Human Avatar
 By: ReadyPlayerMe
 Available at: https://readyplayer.me
 License: CC 4.0 BY"
+align = 1
+valign = 1
+autowrap = true
 
 [node name="HSeparator" type="HSeparator" parent="VBoxContainer/PanelContainer/VBoxContainer"]
 margin_top = 789.0

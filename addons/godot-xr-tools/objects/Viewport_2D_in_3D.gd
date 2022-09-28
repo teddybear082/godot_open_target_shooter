@@ -12,9 +12,10 @@ export (PackedScene) var scene = null setget set_scene, get_scene
 
 # Need to replace this with proper solution once support for layer selection has been added
 export (int, LAYERS_3D_PHYSICS) var collision_layer = 15 setget set_collision_layer
-
+export var viewport_update_threshold = 30
 var is_ready = false
 var scene_node = null
+var viewport_update_throttle = 0
 
 func set_enabled(is_enabled: bool):
 	enabled = is_enabled
@@ -82,6 +83,7 @@ func _ready():
 	set_collision_layer(collision_layer)
 	set_transparent(transparent)
 	set_process_input(true)
+	$Viewport.set_update_mode(Viewport.UPDATE_ONCE)
 
 func _on_pointer_entered():
 	emit_signal("pointer_entered")
@@ -89,5 +91,10 @@ func _on_pointer_entered():
 func _on_pointer_exited():
 	emit_signal("pointer_exited")
 
+func _process(delta):
+	viewport_update_throttle += 1
+	if viewport_update_throttle >= viewport_update_threshold:
+		$Viewport.set_update_mode(Viewport.UPDATE_ONCE)
+		viewport_update_throttle = 0
 func _input(event):
 	$Viewport.input(event)

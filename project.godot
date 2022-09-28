@@ -522,5 +522,4 @@ player_next_weapon={
 
 [rendering]
 
-quality/filters/msaa=2
 environment/default_environment="res://world_env.tres"

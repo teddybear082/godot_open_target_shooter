@@ -27,7 +27,7 @@ var borderless_window: bool = false setget set_borderless_window
 var fullscreen_window: bool = true setget set_fullscreen_window
 var vsync: bool = true setget set_vsync
 var fxaa: bool = false setget set_fxaa
-var msaa: int = Viewport.MSAA_4X setget set_msaa
+var msaa: int = Viewport.MSAA_DISABLED setget set_msaa
 
 var left_handed_mode: bool = false setget set_lefthanded_mode, get_lefthanded_mode
 var snap_turn_mode: bool = false setget set_snap_turn_mode, get_snap_turn_mode
