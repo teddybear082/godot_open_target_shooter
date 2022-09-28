@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://world_env.tres" type="Environment" id=1]
 [ext_resource path="res://src/level_components/level.gd" type="Script" id=2]
@@ -27,40 +27,6 @@ extents = Vector3( 24, 0.25, 32 )
 [sub_resource type="PlaneMesh" id=3]
 material = ExtResource( 13 )
 size = Vector2( 16, 16 )
-
-[sub_resource type="QuadMesh" id=4]
-resource_local_to_scene = true
-size = Vector2( 0.15, 0.1 )
-
-[sub_resource type="ViewportTexture" id=12]
-
-[sub_resource type="SpatialMaterial" id=6]
-resource_local_to_scene = true
-flags_transparent = true
-flags_unshaded = true
-params_cull_mode = 2
-albedo_texture = SubResource( 12 )
-
-[sub_resource type="BoxShape" id=7]
-resource_local_to_scene = true
-extents = Vector3( 0.075, 0.05, 0.01 )
-
-[sub_resource type="QuadMesh" id=8]
-resource_local_to_scene = true
-size = Vector2( 0.2, 0.2 )
-
-[sub_resource type="ViewportTexture" id=13]
-
-[sub_resource type="SpatialMaterial" id=10]
-resource_local_to_scene = true
-flags_transparent = true
-flags_unshaded = true
-params_cull_mode = 2
-albedo_texture = SubResource( 13 )
-
-[sub_resource type="BoxShape" id=11]
-resource_local_to_scene = true
-extents = Vector3( 0.1, 0.1, 0.01 )
 
 [node name="Level" type="Spatial"]
 script = ExtResource( 2 )
@@ -403,32 +369,18 @@ bus = "SoundEffects"
 [node name="PickableHandGun" parent="." instance=ExtResource( 12 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -21.1325, 0, 4.89882 )
 
+[node name="PickableRifle" parent="." instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -20.4931, 0, 4.92326 )
+
+[node name="Player" parent="." instance=ExtResource( 10 )]
+
 [node name="Weapon_RadialMenu" parent="." instance=ExtResource( 42 )]
 radial_controller_path = NodePath("../Player/FPController/RightHandController")
 menu_entries = [ "height", "rifle", "pistol" ]
 
-[node name="PickableRifle" parent="." instance=ExtResource( 7 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -20.4931, 0, 4.92326 )
-
 [node name="Level_RadialMenu" parent="." instance=ExtResource( 42 )]
 radial_controller_path = NodePath("../Player/FPController/LeftHandController")
 menu_entries = [ "home", "level1", "level2", "level3", "level4", "level5" ]
-
-[node name="Player" parent="." instance=ExtResource( 10 )]
-
-[node name="Screen" parent="Player/FPController/LeftHandController/LeftHandHUD" index="1"]
-mesh = SubResource( 4 )
-material/0 = SubResource( 6 )
-
-[node name="CollisionShape" parent="Player/FPController/LeftHandController/LeftHandHUD/StaticBody" index="0"]
-shape = SubResource( 7 )
-
-[node name="Screen" parent="Player/FPController/RightHandController/RightHandHUD" index="1"]
-mesh = SubResource( 8 )
-material/0 = SubResource( 10 )
-
-[node name="CollisionShape" parent="Player/FPController/RightHandController/RightHandHUD/StaticBody" index="0"]
-shape = SubResource( 11 )
 
 [node name="VRWeaponController" type="Node" parent="."]
 script = ExtResource( 14 )
@@ -438,5 +390,3 @@ script = ExtResource( 14 )
 
 [editable path="RangeEntrance"]
 [editable path="RangeExit"]
-[editable path="Player"]
-[editable path="Player/FPController"]
