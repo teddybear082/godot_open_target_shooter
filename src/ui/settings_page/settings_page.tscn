@@ -60,9 +60,9 @@ custom_constants/separation = 50
 alignment = 1
 
 [node name="Audio" type="GridContainer" parent="VBoxContainer/PanelContainer/VBoxContainer"]
-margin_top = 83.0
+margin_top = 57.0
 margin_right = 765.0
-margin_bottom = 275.0
+margin_bottom = 249.0
 size_flags_horizontal = 3
 size_flags_vertical = 4
 custom_constants/vseparation = 20
@@ -223,14 +223,14 @@ margin_bottom = 33.0
 text = "100"
 
 [node name="HSeparator" type="HSeparator" parent="VBoxContainer/PanelContainer/VBoxContainer"]
-margin_top = 325.0
+margin_top = 299.0
 margin_right = 765.0
-margin_bottom = 329.0
+margin_bottom = 303.0
 
 [node name="Gameplay" type="GridContainer" parent="VBoxContainer/PanelContainer/VBoxContainer"]
-margin_top = 379.0
+margin_top = 353.0
 margin_right = 765.0
-margin_bottom = 607.0
+margin_bottom = 634.0
 size_flags_horizontal = 3
 size_flags_vertical = 4
 custom_constants/vseparation = 20
@@ -241,7 +241,7 @@ __meta__ = {
 }
 
 [node name="Label" type="Label" parent="VBoxContainer/PanelContainer/VBoxContainer/Gameplay"]
-margin_right = 188.0
+margin_right = 226.0
 margin_bottom = 69.0
 text = "Mouse 
 Sensitivity"
@@ -249,7 +249,7 @@ align = 2
 valign = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/PanelContainer/VBoxContainer/Gameplay"]
-margin_left = 238.0
+margin_left = 276.0
 margin_right = 765.0
 margin_bottom = 69.0
 size_flags_horizontal = 3
@@ -263,7 +263,7 @@ text = "0"
 [node name="SliderMouseSense" type="HSlider" parent="VBoxContainer/PanelContainer/VBoxContainer/Gameplay/HBoxContainer"]
 margin_left = 25.0
 margin_top = 26.0
-margin_right = 471.0
+margin_right = 433.0
 margin_bottom = 42.0
 size_flags_horizontal = 3
 size_flags_vertical = 4
@@ -273,65 +273,78 @@ tick_count = 5
 ticks_on_borders = true
 
 [node name="Label2" type="Label" parent="VBoxContainer/PanelContainer/VBoxContainer/Gameplay/HBoxContainer"]
-margin_left = 475.0
+margin_left = 437.0
 margin_top = 18.0
-margin_right = 527.0
+margin_right = 489.0
 margin_bottom = 51.0
 text = "100"
 
 [node name="Label2" type="Label" parent="VBoxContainer/PanelContainer/VBoxContainer/Gameplay"]
 margin_top = 89.0
-margin_right = 188.0
+margin_right = 226.0
 margin_bottom = 122.0
 text = "Toggle Sprint"
 align = 2
 valign = 1
 
 [node name="ToggleSprintCheckButton" type="CheckButton" parent="VBoxContainer/PanelContainer/VBoxContainer/Gameplay"]
-margin_left = 238.0
+margin_left = 276.0
 margin_top = 89.0
-margin_right = 302.0
+margin_right = 340.0
 margin_bottom = 122.0
 size_flags_horizontal = 0
 
 [node name="Label3" type="Label" parent="VBoxContainer/PanelContainer/VBoxContainer/Gameplay"]
 margin_top = 142.0
-margin_right = 188.0
+margin_right = 226.0
 margin_bottom = 175.0
 text = "Toggle Aim"
 align = 2
 valign = 1
 
 [node name="ToggleAimCheckButton" type="CheckButton" parent="VBoxContainer/PanelContainer/VBoxContainer/Gameplay"]
-margin_left = 238.0
+margin_left = 276.0
 margin_top = 142.0
-margin_right = 302.0
+margin_right = 340.0
 margin_bottom = 175.0
 size_flags_horizontal = 0
 
 [node name="Label4" type="Label" parent="VBoxContainer/PanelContainer/VBoxContainer/Gameplay"]
 margin_top = 195.0
-margin_right = 188.0
+margin_right = 226.0
 margin_bottom = 228.0
-text = "Left Handed"
+text = "VR Left Handed"
 
 [node name="LeftHandedCheckButton" type="CheckButton" parent="VBoxContainer/PanelContainer/VBoxContainer/Gameplay"]
-margin_left = 238.0
+margin_left = 276.0
 margin_top = 195.0
-margin_right = 302.0
+margin_right = 340.0
 margin_bottom = 228.0
 size_flags_horizontal = 0
 
+[node name="Label5" type="Label" parent="VBoxContainer/PanelContainer/VBoxContainer/Gameplay"]
+margin_top = 248.0
+margin_right = 226.0
+margin_bottom = 281.0
+text = "VR Snap Turn"
+
+[node name="SnapTurnCheckButton" type="CheckButton" parent="VBoxContainer/PanelContainer/VBoxContainer/Gameplay"]
+margin_left = 276.0
+margin_top = 248.0
+margin_right = 340.0
+margin_bottom = 281.0
+size_flags_horizontal = 0
+
 [node name="HSeparator2" type="HSeparator" parent="VBoxContainer/PanelContainer/VBoxContainer"]
-margin_top = 657.0
+margin_top = 684.0
 margin_right = 765.0
-margin_bottom = 661.0
+margin_bottom = 688.0
 
 [node name="Video" type="GridContainer" parent="VBoxContainer/PanelContainer/VBoxContainer"]
 margin_left = 161.0
-margin_top = 711.0
+margin_top = 738.0
 margin_right = 603.0
-margin_bottom = 818.0
+margin_bottom = 845.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 custom_constants/vseparation = 20
@@ -426,6 +439,7 @@ __meta__ = {
 [connection signal="pressed" from="VBoxContainer/PanelContainer/VBoxContainer/Gameplay/ToggleSprintCheckButton" to="." method="_on_check_btn_toggle_sprint_pressed"]
 [connection signal="pressed" from="VBoxContainer/PanelContainer/VBoxContainer/Gameplay/ToggleAimCheckButton" to="." method="_on_check_btn_toggle_aim_pressed"]
 [connection signal="pressed" from="VBoxContainer/PanelContainer/VBoxContainer/Gameplay/LeftHandedCheckButton" to="." method="_on_LeftHandedCheckButton_pressed"]
+[connection signal="pressed" from="VBoxContainer/PanelContainer/VBoxContainer/Gameplay/SnapTurnCheckButton" to="." method="_on_SnapTurnCheckButton_pressed"]
 [connection signal="pressed" from="VBoxContainer/PanelContainer/VBoxContainer/Video/LeftColumn/BorderlessCheckButton" to="." method="_on_check_btn_borderless_pressed"]
 [connection signal="pressed" from="VBoxContainer/PanelContainer/VBoxContainer/Video/LeftColumn/FullScreenCheckButton" to="." method="_on_check_btn_fullscreen_pressed"]
 [connection signal="pressed" from="VBoxContainer/PanelContainer/VBoxContainer/Video/LeftColumn/VSyncCheckButton" to="." method="_on_check_btn_vsync_pressed"]

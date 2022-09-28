@@ -30,7 +30,7 @@ var fxaa: bool = false setget set_fxaa
 var msaa: int = Viewport.MSAA_4X setget set_msaa
 
 var left_handed_mode: bool = false setget set_lefthanded_mode, get_lefthanded_mode
-
+var snap_turn_mode: bool = false setget set_snap_turn_mode, get_snap_turn_mode
 ############################
 # Engine Callback Methods  #
 ############################
@@ -85,6 +85,14 @@ func set_lefthanded_mode(val: bool) -> void:
 func get_lefthanded_mode() -> bool:
 	return left_handed_mode
 	
+func set_snap_turn_mode(val: bool) -> void:
+	snap_turn_mode = val
+	
+	
+func get_snap_turn_mode() -> bool:
+	return snap_turn_mode
+	
+	
 	
 func save() -> void:
 	var file_checker: File = File.new()
@@ -112,6 +120,7 @@ func save() -> void:
 		prefs_cfg.set_value("user_prefs", "fxaa", fxaa)
 		prefs_cfg.set_value("user_prefs", "msaa", msaa)
 		prefs_cfg.set_value("user_prefs", "left_handed", left_handed_mode)
+		prefs_cfg.set_value("user_prefs", "snap_turn", snap_turn_mode)
 		
 		err = prefs_cfg.save("user://user_prefs.cfg")
 
@@ -150,3 +159,4 @@ func _load() -> void:
 		set_fxaa(prefs_cfg.get_value("user_prefs", "fxaa"))
 		set_msaa(prefs_cfg.get_value("user_prefs", "msaa"))
 		set_lefthanded_mode(prefs_cfg.get_value("user_prefs", "left_handed"))
+		set_snap_turn_mode(prefs_cfg.get_value("user_prefs", "snap_turn"))

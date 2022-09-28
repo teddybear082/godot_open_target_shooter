@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=2]
+[gd_scene load_steps=45 format=2]
 
 [ext_resource path="res://addons/godot-xr-tools/objects/Viewport_2D_in_3D.gd" type="Script" id=1]
 [ext_resource path="res://addons/godot-xr-tools/objects/Viewport_2D_in_3D_body.gd" type="Script" id=2]
@@ -17,6 +17,7 @@
 [ext_resource path="res://addons/godot-xr-tools/assets/PlayerBody.tscn" type="PackedScene" id=15]
 [ext_resource path="res://src/actor/player/mats/base.material" type="Material" id=16]
 [ext_resource path="res://src/actor/player/mats/colour.material" type="Material" id=17]
+[ext_resource path="res://addons/godot-xr-tools/functions/Function_Teleport.tscn" type="PackedScene" id=18]
 
 [sub_resource type="QuadMesh" id=1]
 resource_local_to_scene = true
@@ -4238,6 +4239,10 @@ shape = SubResource( 4 )
 [node name="Function_Jump_movement" parent="FPController/LeftHandController" index="4" instance=ExtResource( 12 )]
 jump_button_id = 14
 
+[node name="Function_Teleport" parent="FPController/LeftHandController" index="5" instance=ExtResource( 18 )]
+teleport_button = 7
+camera = NodePath("../../ARVRCamera")
+
 [node name="RightPhysicsHand" parent="FPController/RightHandController" index="0" instance=ExtResource( 4 )]
 collision_layer = 131072
 margin = 0.004
@@ -4277,6 +4282,11 @@ viewport_size = Vector2( 400, 400 )
 
 [node name="CollisionShape" type="CollisionShape" parent="FPController/RightHandController/RightHandHUD/StaticBody"]
 shape = SubResource( 8 )
+
+[node name="Function_Teleport" parent="FPController/RightHandController" index="5" instance=ExtResource( 18 )]
+enabled = false
+teleport_button = 7
+camera = NodePath("../../ARVRCamera")
 
 [node name="PlayerBody" parent="FPController" instance=ExtResource( 15 )]
 

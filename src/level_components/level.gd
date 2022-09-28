@@ -65,21 +65,29 @@ func _ready() -> void:
 	
 	_connect_signals()
 	_init_level_ui()
+	
+	if UserPreferences.snap_turn_mode == true:
+		var right_controller = _player.get_node("FPController/RightHandController")
+		right_controller.get_node("Function_Turn_movement").smooth_rotation = false
+		
 
 	if UserPreferences.left_handed_mode == true: 
 		var left_controller = _player.get_node("FPController/LeftHandController")
 		var right_controller = _player.get_node("FPController/RightHandController")
 		var left_controller_children = left_controller.get_children()
 		var right_controller_children = right_controller.get_children()
+		left_controller.get_node("Function_Teleport").enabled = false
+		right_controller.get_node("Function_Teleport").enabled = true
 		
-		for child in left_controller_children:
-			if child.is_in_group("movement_providers"):
-				left_controller.remove_child(child)
-				right_controller.add_child(child)
-		for child in right_controller_children:
-			if child.is_in_group("movement_providers"):
-				right_controller.remove_child(child)
-				left_controller.add_child(child)
+		#This isn't working right now for whatever reason
+		#for child in left_controller_children:
+		#	if child.is_in_group("movement_providers"):
+		#		left_controller.remove_child(child)
+		#		right_controller.add_child(child)
+		#for child in right_controller_children:
+		#	if child.is_in_group("movement_providers"):
+		#		right_controller.remove_child(child)
+		#		left_controller.add_child(child)
 		_radial_menu.controller = left_controller
 		_level_radial_menu.controller = right_controller
 		_vr_weapon_controller.primary_hand_function_pickup = left_controller.get_node("Function_Pickup")

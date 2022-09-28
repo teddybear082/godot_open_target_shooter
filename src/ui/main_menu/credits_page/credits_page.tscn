@@ -91,7 +91,7 @@ scroll_horizontal_enabled = false
 
 [node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/PanelContainer/VBoxContainer/ScrollContainer"]
 margin_right = 1112.0
-margin_bottom = 1433.0
+margin_bottom = 1729.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/separation = 25
@@ -201,6 +201,23 @@ License: CC BY 3.0"
 align = 1
 valign = 1
 autowrap = true
+
+[node name="LabelCredit12" type="Label" parent="VBoxContainer/PanelContainer/VBoxContainer/ScrollContainer/VBoxContainer"]
+margin_top = 1458.0
+margin_right = 1112.0
+margin_bottom = 1563.0
+text = "VR Conversion
+By: teddybear082
+License: MIT"
+
+[node name="LabelCredit13" type="Label" parent="VBoxContainer/PanelContainer/VBoxContainer/ScrollContainer/VBoxContainer"]
+margin_top = 1588.0
+margin_right = 1112.0
+margin_bottom = 1729.0
+text = "VR Human Avatar
+By: ReadyPlayerMe
+Available at: https://readyplayer.me
+License: CC 4.0 BY"
 
 [node name="HSeparator" type="HSeparator" parent="VBoxContainer/PanelContainer/VBoxContainer"]
 margin_top = 789.0
