@@ -522,4 +522,6 @@ player_next_weapon={
 
 [rendering]
 
+gles3/shaders/shader_compilation_mode=2
+gles3/shaders/shader_compilation_mode.mobile=2
 environment/default_environment="res://world_env.tres"

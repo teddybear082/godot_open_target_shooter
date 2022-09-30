@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://addons/godot-xr-tools/misc/VR_Common_Shader_Cache.gd" type="Script" id=1]
 [ext_resource path="res://addons/godot-xr-tools/materials/teleport.tres" type="Material" id=2]
@@ -6,9 +6,107 @@
 [ext_resource path="res://addons/godot-xr-tools/materials/capule.tres" type="Material" id=4]
 [ext_resource path="res://addons/godot-xr-tools/materials/pointer.tres" type="Material" id=5]
 [ext_resource path="res://addons/godot-xr-tools/materials/highlight.tres" type="Material" id=6]
+[ext_resource path="res://raw_assets/particle_textures/smoke_1.png" type="Texture" id=7]
 
 [sub_resource type="PlaneMesh" id=1]
 size = Vector2( 0.001, 0.001 )
+
+[sub_resource type="SpatialMaterial" id=9]
+flags_transparent = true
+vertex_color_use_as_albedo = true
+params_billboard_mode = 3
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+albedo_texture = ExtResource( 7 )
+
+[sub_resource type="Gradient" id=10]
+offsets = PoolRealArray( 0.333333, 1 )
+colors = PoolColorArray( 0.223529, 0.223529, 0.223529, 1, 0.357422, 0.357422, 0.357422, 0.301961 )
+
+[sub_resource type="GradientTexture" id=6]
+gradient = SubResource( 10 )
+
+[sub_resource type="Curve" id=11]
+_data = [ Vector2( 0, 0.204545 ), 0.0, 0.0, 0, 0, Vector2( 0.40493, 0.904545 ), 0.0, 0.0, 0, 0, Vector2( 0.68662, 0.804546 ), 0.0, 0.0, 0, 0, Vector2( 1, 0.513636 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=8]
+curve = SubResource( 11 )
+
+[sub_resource type="ParticlesMaterial" id=12]
+spread = 180.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 0.3
+angular_velocity = 45.0
+angle = 45.0
+angle_random = 1.0
+scale_curve = SubResource( 8 )
+color_ramp = SubResource( 6 )
+
+[sub_resource type="QuadMesh" id=13]
+
+[sub_resource type="SpatialMaterial" id=14]
+flags_transparent = true
+vertex_color_use_as_albedo = true
+params_billboard_mode = 3
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+albedo_texture = ExtResource( 7 )
+
+[sub_resource type="Gradient" id=15]
+offsets = PoolRealArray( 0.333333, 1 )
+colors = PoolColorArray( 0.223529, 0.223529, 0.223529, 1, 0.357422, 0.357422, 0.357422, 0.301961 )
+
+[sub_resource type="GradientTexture" id=16]
+gradient = SubResource( 15 )
+
+[sub_resource type="Curve" id=17]
+_data = [ Vector2( 0, 0.204545 ), 0.0, 0.0, 0, 0, Vector2( 0.40493, 0.904545 ), 0.0, 0.0, 0, 0, Vector2( 0.68662, 0.804546 ), 0.0, 0.0, 0, 0, Vector2( 1, 0.513636 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=18]
+curve = SubResource( 17 )
+
+[sub_resource type="ParticlesMaterial" id=19]
+spread = 180.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 0.3
+angular_velocity = 45.0
+angle = 45.0
+angle_random = 1.0
+scale_curve = SubResource( 18 )
+color_ramp = SubResource( 16 )
+
+[sub_resource type="QuadMesh" id=20]
+
+[sub_resource type="Shader" id=21]
+code = "shader_type spatial;
+render_mode unshaded, depth_draw_never, depth_test_disable;
+
+uniform sampler2D albedo_texture;
+uniform bool selected;
+
+void vertex () {
+	
+}
+
+void fragment () {
+	vec4 color = texture(albedo_texture, UV);
+	ALBEDO = color.xyz;
+	ALPHA = color.w;
+	
+	if (color.w < 1e-6 && selected) {
+		ALBEDO = vec3(1.0, 1.0, 1.0);
+		ALPHA = 1.0;
+	}
+}"
+
+[sub_resource type="ShaderMaterial" id=22]
+shader = SubResource( 21 )
+shader_param/selected = null
+
+[sub_resource type="QuadMesh" id=23]
+size = Vector2( 0.1, 0.1 )
 
 [node name="vr_common_shader_cache" type="Spatial"]
 script = ExtResource( 1 )
@@ -37,3 +135,23 @@ material/0 = ExtResource( 5 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2 )
 mesh = SubResource( 1 )
 material/0 = ExtResource( 6 )
+
+[node name="Particles" type="Particles" parent="."]
+material_override = SubResource( 9 )
+lifetime = 0.5
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource( 12 )
+draw_pass_1 = SubResource( 13 )
+
+[node name="Particles2" type="Particles" parent="."]
+material_override = SubResource( 14 )
+lifetime = 0.5
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource( 19 )
+draw_pass_1 = SubResource( 20 )
+
+[node name="IconTemplate" type="MeshInstance" parent="."]
+material_override = SubResource( 22 )
+mesh = SubResource( 23 )
