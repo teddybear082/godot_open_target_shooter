@@ -36,6 +36,8 @@ onready var _level_ui: LevelUI = get_node("LevelUI")
 onready var _vr_level_ui = get_node("Player/FPController/RightHandController/RightHandHUD").get_scene_instance()
 onready var _pause_menu: MultiPageUIMagager = $PauseMenu/PauseMenu
 onready var _run_summary_page: Control = $RunSummaryPage/RunSummaryPage
+onready var _run_summary_viewport3D = $RunSummaryViewport3D
+onready var _run_summary_page_vr = $RunSummaryViewport3D.get_scene_instance()
 
 onready var _target_manager: TargetManager = $TargetManager
 onready var _bullet_manager: BulletManager = $BulletManager
@@ -62,6 +64,7 @@ func _ready() -> void:
 		_level_ui.set_label_time_best(_best_time)
 		_vr_level_ui.set_label_time_best(_best_time)
 	_run_summary_page.set_level_par_time(_par_time)
+	_run_summary_page_vr.set_level_par_time(_par_time)
 	
 	_connect_signals()
 	_init_level_ui()
@@ -95,6 +98,15 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if _is_player_on_range:
 		_set_run_time_raw(_run_time_raw + delta)
+
+#	if _run_summary_viewport3D.visible == true:
+#		var vrCamera = _player.get_node("FPController/ARVRCamera")
+#		var viewDir = -vrCamera.global_transform.basis.z
+#		var camPos = vrCamera.global_transform.origin
+#		var distance = 2.0
+#		var currentPosition = camPos + viewDir * distance
+#		_run_summary_viewport3D.global_transform.origin = currentPosition
+
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -310,20 +322,51 @@ func _start_run() -> void:
 	_vr_level_ui.set_label_enemy_hits(0, _target_manager.target_count_enemy())
 	_vr_level_ui.set_label_friendly_hits(0)
 
+	_run_summary_viewport3D.visible = false
+	_run_summary_viewport3D.global_transform.origin.y = 4
+	_run_summary_page_vr.reset_badges_icons()
+	
 
 func _update_and_show_run_summary(missed_enemy_penalty_time_total: float, hit_friendly_penalty_time_total: float) -> void:
 	_run_summary_page.update_time_stats(
 			_run_time, _run_time_raw, _badge_tracker.get_run_badge_time(),
 			missed_enemy_penalty_time_total, hit_friendly_penalty_time_total
 	)
+	_run_summary_page_vr.update_time_stats(
+			_run_time, _run_time_raw, _badge_tracker.get_run_badge_time(),
+			missed_enemy_penalty_time_total, hit_friendly_penalty_time_total
+	)
+	
+	
 	_run_summary_page.update_misc_stats(
 			_target_manager.target_count_enemy_down(), _target_manager.target_count_enemy(), 
 			_target_manager.target_count_friendly_down(), _bullet_manager.run_acc, 
 			_bullet_manager.run_bullet_count, _bullet_manager.run_longest_shot
 	)
+	_run_summary_page_vr.update_misc_stats(
+			_target_manager.target_count_enemy_down(), _target_manager.target_count_enemy(), 
+			_target_manager.target_count_friendly_down(), _bullet_manager.run_acc, 
+			_bullet_manager.run_bullet_count, _bullet_manager.run_longest_shot
+	)
+	
 	_run_summary_page.update_run_badges(_badge_tracker.get_run_badges())
+	_run_summary_page_vr.update_run_badges(_badge_tracker.get_run_badges())
 	#_run_summary_page.popup()
-
+	_run_summary_page_vr.display_is_new_best()
+	
+	var vrCamera = _player.get_node("FPController/ARVRCamera")
+	var viewDir = -vrCamera.global_transform.basis.z
+	var camPos = vrCamera.global_transform.origin
+	var distance = 2.0
+	var currentPosition = camPos + viewDir * distance;
+	var targetPosition = currentPosition;
+	var movePosition = currentPosition;
+	
+	#_run_summary_viewport3D.look_at_from_position(currentPosition, camPos, Vector3(0,1,0))
+	#_run_summary_viewport3D.rotation_degrees.y = 180
+	_run_summary_viewport3D.global_transform.origin = currentPosition
+	_run_summary_viewport3D.visible = true
+	
 func _finish_run() -> void:
 	MusicManager.transition_to_track(
 			MusicManager.Tracks.OFF_RANGE, 3
@@ -351,11 +394,11 @@ func _finish_run() -> void:
 	 
 	_update_level_best()
 	
-	#yield(get_tree().create_timer(0.5), "timeout")
-	#_update_and_show_run_summary(
-	#		missed_enemy_penalty_time_total, hit_friendly_penalty_time_total
-	#)
-
+	yield(get_tree().create_timer(3), "timeout")
+	_update_and_show_run_summary(
+			missed_enemy_penalty_time_total, hit_friendly_penalty_time_total
+	)
+	
 
 func _update_level_best() -> void:
 	if _best_time == -1.0:
@@ -364,11 +407,15 @@ func _update_level_best() -> void:
 		_vr_level_ui.set_label_time_best(_best_time)
 		SaveLoad.save_level_best_time(_level_name, _run_time)
 		_run_summary_page.is_new_best = true
+		_run_summary_page_vr.is_new_best = true
+		
 	elif _run_time < _best_time:
 		_run_summary_page.is_new_best = true
+		_run_summary_page_vr.is_new_best = true
 		_best_time = _run_time
 		_level_ui.set_label_time_best(_best_time)
 		_vr_level_ui.set_label_time_best(_best_time)
 		SaveLoad.save_level_best_time(_level_name, _run_time)
 	else:
 		_run_summary_page.is_new_best = false
+		_run_summary_page_vr.is_new_best = false

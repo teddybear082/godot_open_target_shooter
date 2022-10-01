@@ -95,6 +95,16 @@ func set_level_par_time(time: float) -> void:
 	_par_time = time
 
 
+func display_is_new_best():
+	_new_best_effect.visible = is_new_best
+	if is_new_best:
+		_anim_player.play("new_best")
+		
+
+func reset_badges_icons():
+	for badge_icon in _badge_icons_container.get_children():
+		badge_icon.queue_free()
+
 func popup() -> void:
 	visible = true
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
