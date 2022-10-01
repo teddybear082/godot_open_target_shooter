@@ -158,23 +158,17 @@ func _on_quit_level() -> void:
 
 func _on_radial_level_entry_selected(entry):
 	if entry == "home":
-		#get_tree().quit()
 		_on_quit_level()
 	if entry == "level1":
 		emit_signal("change_scene_request", "res://src/levels/level_1.tscn")
-		#get_tree().change_scene("res://src/levels/level_1.tscn")
 	if entry == "level2":
 		emit_signal("change_scene_request", "res://src/levels/level_2.tscn")
-		#get_tree().change_scene("res://src/levels/level_2.tscn")
 	if entry == "level3":
 		emit_signal("change_scene_request", "res://src/levels/level_3.tscn")
-		#get_tree().change_scene("res://src/levels/level_3.tscn")
 	if entry == "level4":
 		emit_signal("change_scene_request", "res://src/levels/level_4.tscn")
-		#get_tree().change_scene("res://src/levels/level_4.tscn")
 	if entry == "level5":
 		emit_signal("change_scene_request", "res://src/levels/level_5.tscn")
-		#get_tree().change_scene("res://src/levels/level_5.tscn")
 
 func _on_radial_entry_selected(entry):
 	var radial_controller = _radial_menu.controller
@@ -304,6 +298,8 @@ func _connect_signals() -> void:
 			self, "_on_radial_level_entry_selected"
 	)
 func _start_run() -> void:
+	_player.get_node("FPController/LeftHandController/Function_pointer").enabled = false
+	_player.get_node("FPController/RightHandController/Function_pointer").enabled = false
 	MusicManager.transition_to_track(
 			MusicManager.Tracks.ON_RANGE, 1
 	)
@@ -323,7 +319,7 @@ func _start_run() -> void:
 	_vr_level_ui.set_label_friendly_hits(0)
 
 	_run_summary_viewport3D.visible = false
-	_run_summary_viewport3D.global_transform.origin.y = 4
+	#_run_summary_viewport3D.global_transform.origin.y = 4
 	_run_summary_page_vr.reset_badges_icons()
 	
 
@@ -354,17 +350,15 @@ func _update_and_show_run_summary(missed_enemy_penalty_time_total: float, hit_fr
 	#_run_summary_page.popup()
 	_run_summary_page_vr.display_is_new_best()
 	
-	var vrCamera = _player.get_node("FPController/ARVRCamera")
-	var viewDir = -vrCamera.global_transform.basis.z
-	var camPos = vrCamera.global_transform.origin
-	var distance = 2.0
-	var currentPosition = camPos + viewDir * distance;
-	var targetPosition = currentPosition;
-	var movePosition = currentPosition;
-	
-	#_run_summary_viewport3D.look_at_from_position(currentPosition, camPos, Vector3(0,1,0))
-	#_run_summary_viewport3D.rotation_degrees.y = 180
-	_run_summary_viewport3D.global_transform.origin = currentPosition
+#	var vrCamera = _player.get_node("FPController/ARVRCamera")
+#	var viewDir = -vrCamera.global_transform.basis.z
+#	var camPos = vrCamera.global_transform.origin
+#	var distance = 2.0
+#	var currentPosition = camPos + viewDir * distance
+#	var targetPosition = currentPosition
+#	var movePosition = currentPosition
+#
+#	_run_summary_viewport3D.global_transform.origin = currentPosition
 	_run_summary_viewport3D.visible = true
 	
 func _finish_run() -> void:
@@ -394,11 +388,12 @@ func _finish_run() -> void:
 	 
 	_update_level_best()
 	
-	yield(get_tree().create_timer(3), "timeout")
+	yield(get_tree().create_timer(1), "timeout")
 	_update_and_show_run_summary(
 			missed_enemy_penalty_time_total, hit_friendly_penalty_time_total
 	)
-	
+	_player.get_node("FPController/LeftHandController/Function_pointer").enabled = true
+	_player.get_node("FPController/RightHandController/Function_pointer").enabled = true
 
 func _update_level_best() -> void:
 	if _best_time == -1.0:
